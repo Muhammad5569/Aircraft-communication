@@ -55,6 +55,25 @@ const ATCManagerSchema = new mongoose.Schema({
         }
     
 })
+// Find ATC manager by credentials
+ATCManagerSchema.statics.findByCredentials = async (login, password) => {
+    const manager = await ATCManager.findOne({ login })
+    if (!manager) {
+        throw new Error('Unable to login')
+    }
+    if (password !== manager.password) {
+        throw new Error('Unable to login')
+    }
+    return manager
+}
 
+// Hash password before saving
+ATCManagerSchema.pre('save', async function (next) {
+    const manager = this
+    if (manager.isModified('password')) {
+        manager.password = await bcrypt.hash(manager.password, 8)
+    }
+    next()
+})
 const ATCManager = mongoose.model('ATCManager', ATCManagerSchema)
 module.exports = ATCManager

@@ -57,7 +57,25 @@ const pilotSchema = new mongoose.Schema({
     },
     
 })
+pilotSchema.statics.findByCredentials = async (login, password) => {
+    const pilot = await Pilot.findOne({ login })
+    if (!pilot) {
+        throw new Error('Unable to login')
+    }
+    const isMatch = await bcrypt.compare(password, pilot.password)
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+    return pilot
+}
 
+pilotSchema.pre('save', async function (next) {
+    const pilot = this
+    if (pilot.isModified('password')) {
+        pilot.password = await bcrypt.hash(pilot.password, 8)
+    }
+    next()
+})
 const Pilot = mongoose.model('Pilot', pilotSchema)
 
 module.exports = Pilot

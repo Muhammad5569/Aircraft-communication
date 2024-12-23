@@ -13,6 +13,14 @@ router.post('/pilots', async (req, res) => {
         res.status(500).send(error)
     }
 })
+router.post('/pilots/login', async (req, res) => {
+    try {
+        const pilot = await Pilot.findByCredentials(req.body.login, req.body.password)
+        res.send(pilot)
+    } catch (error) {
+        res.status(400).send()
+    }
+})
 
 module.exports = router
 

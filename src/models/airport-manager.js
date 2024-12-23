@@ -56,5 +56,30 @@ const airportManagerSchema = new mongoose.Schema({
 
 })
 
+airportManagerSchema.statics.findByCredentials = async (login, password) => {
+    const airportManager = await AirportManager.findOne({ login })
+
+    if (!airportManager) {
+        throw new Error('Unable to login')
+    }
+
+    const isMatch = await bcrypt.compare(password, airportManager.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return airportManager
+}
+
+airportManagerSchema.pre('save', async function (next) {
+    const airportManager = this
+
+    if (airportManager.isModified('password')) {
+        airportManager.password = await bcrypt.hash(airportManager.password, 8)
+    }
+
+    next()
+})
 const AirportManager = mongoose.model('AirportManager', airportManagerSchema)
 module.exports = AirportManager
