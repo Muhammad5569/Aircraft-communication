@@ -15,3 +15,6 @@ const systemAdminSchema = new mongoose.Schema({
         minlength: 7,
     }
 })
+
+const SystemAdmin = mongoose.model('SystemAdmin', systemAdminSchema)
+module.exports = SystemAdmin
