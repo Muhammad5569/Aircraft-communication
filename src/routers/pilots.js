@@ -14,3 +14,5 @@ router.post('/pilots', async (req, res) => {
     }
 })
 
+module.exports = router
+

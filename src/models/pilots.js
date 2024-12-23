@@ -19,7 +19,7 @@ const pilotSchema = new mongoose.Schema({
     role:{
         type: String,
     },
-    airway:{
+    airways:{
         name:{
             type: String,
             required: true,
