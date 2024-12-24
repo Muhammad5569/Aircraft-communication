@@ -21,6 +21,15 @@ router.post('/pilots/login', async (req, res) => {
         res.status(400).send()
     }
 })
+router.get('/pilots', async (req, res) => {
+    try {
+        const data = req.body;
+        const string = {'hello': 'world'}
+        res.send({data,string })
+    } catch (error) {
+        res.send(error)
+    }
+})
 
 module.exports = router
 
