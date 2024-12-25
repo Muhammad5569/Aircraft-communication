@@ -10,10 +10,12 @@ router.post('/pilots', async (req, res) => {
     if(!pilot) {
         return res.status(400).send()
     }
+    console.log(pilot)
     try {
         await pilot.save()
         res.status(201).send(pilot)
     } catch (error) {
+        console.error("missing module", error)
         res.status(500).send(error)
     }
 })
