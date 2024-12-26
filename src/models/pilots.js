@@ -20,17 +20,15 @@ const pilotSchema = new mongoose.Schema({
     role:{
         type: String,
     },
-    airways:{
-        name:{
+    airwaysName:{     
             type: String,
             required: true,
-        },
-        address:{
-            type:String,
-            required: true,
-        }
     },
-    phone:{
+    airwaysAddress:{
+        type:String,
+        required: true,
+    },
+    phone :{
         type: Number,
         required: true,
         unique: true,

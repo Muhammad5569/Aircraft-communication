@@ -58,7 +58,7 @@ router.put('/flights/:id', async (req, res) => {
             req.params.id, 
             updatedFlight, 
             { new: true, runValidators: true, overwrite: true }
-        );
+        ); 
         res.send(result);
     } catch (e) {
         res.status(400).send(e);

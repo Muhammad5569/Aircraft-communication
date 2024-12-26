@@ -35,6 +35,19 @@ router.get('/pilots', async (req, res) => {
         res.send(error)
     }
 })
+//get by id
+router.get('/pilots/:id', async (req, res) => {
+    const _id = req.params.id
+    try {
+        const pilot = await Pilot.findById(_id)
+        if(!pilot) {
+            return res.status(404).send()
+        }
+        res.send(pilot)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 router.delete('/pilots/:id', async (req, res) => {
     try {
