@@ -19,6 +19,18 @@ router.post('/pilots', async (req, res) => {
         res.status(500).send(error)
     }
 })
+router.post('/pilots/all', async (req, res) => {
+    const data = req.body
+    data.forEach(async (body) => {
+        const pilot = new Pilot(body)
+        try {
+            await pilot.save()
+        } catch (error) {
+            console.log(error)
+        }
+    })
+    res.status(200).json('Success')
+})
 router.post('/pilots/login', async (req, res) => {
     try {
         const pilot = await Pilot.findByCredentials(req.body.login, req.body.password)

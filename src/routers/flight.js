@@ -20,6 +20,18 @@ router.post('/flights', async (req, res) => {
         res.status(400).send(e);
     }
 });
+router.post('/flights/all', async (req, res) => {
+    const data = req.body;
+    data.forEach(async (body) => {
+        const flight = new Flight(body);
+        try {
+            await flight.save();
+        } catch (error) {
+            console.log(error);
+        }
+    })
+    res.status(200).json('Success');
+});
 //update existing flight details
 router.patch('/flights/:id', async (req, res) => {
     const updates = Object.keys(req.body);
