@@ -6,13 +6,13 @@ const router = new express.Router()
 
 
 router.post('/pilots', async (req, res) => {
-    const pilot = new Pilot(req.body)
-    if(!pilot) {
-        return res.status(400).send()
-    }
-    console.log(pilot)
+    // const pilot = new Pilot(req.body)
+    // if(!pilot) {
+    //     return res.status(400).send()
+    // }
     try {
-        await pilot.save()
+        const pilot = await Pilot.create(req.body)
+        //await pilot.save()
         res.status(201).send(pilot)
     } catch (error) {
         console.error("missing module", error)
@@ -48,7 +48,24 @@ router.get('/pilots/:id', async (req, res) => {
         res.status(500).send(error)
     }
 })
-
+//update by id
+router.patch('/pilots/:id', async (req, res) => {
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'login']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+    if(!isValidOperation) {
+        return res.status(400).send({error:'Invalid updates'})
+    }
+    try {
+        const pilot = await Pilot.findByIdAndUpdate(req.params.id, req.body, {new:true, runValidators:true})
+        if(!pilot) {
+            return res.status(404).send()
+        }
+        res.send(pilot)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
 router.delete('/pilots/:id', async (req, res) => {
     try {
         const pilot = await Pilot.findByIdAndDelete(req.params.id)
