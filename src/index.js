@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const routerPilot = require('./routers/pilots')
 const routerFlight = require('./routers/flight')
+const routerAircraft = require('./routers/aircraft')
 const routerSystemAdmin = require('./routers/system-admin')
 require('dotenv').config()
 
@@ -19,6 +20,7 @@ app.use(function(req, res, next) {
 app.use(express.json()) 
 app.use(routerPilot)
 app.use(routerFlight)
+app.use(routerAircraft)
 app.use(routerSystemAdmin)
 
 app.listen(port, () => {
