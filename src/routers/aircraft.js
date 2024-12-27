@@ -13,6 +13,19 @@ router.post('/aircraft', async (req, res) => {
     }
 });
 
+router.post('/aircraft/all', async (req, res) => {
+    const data = req.body;
+    data.forEach(async (body) => {
+        const aircraft = new Aircraft(body);
+        try {
+            await aircraft.save();
+        } catch (error) {
+            console.log(error);
+        }
+    });
+    res.status(200).json('Success');
+})
+
 // Get all aircraft
 router.get('/aircraft', async (req, res) => {
     try {
