@@ -36,7 +36,7 @@ const flightSchema = new mongoose.Schema({
     },
 // duration	TIME	Duration of the flight. 
     duration: {
-        type: Date,
+        type: String,
     },
 // status	VARCHAR	Flight status (e.g., scheduled, delayed).
     status: {

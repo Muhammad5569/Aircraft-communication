@@ -39,6 +39,13 @@ router.post('/pilots/login', async (req, res) => {
         res.status(400).send()
     }
 })
+router.post('pilots/task', async (req, res) =>{
+    // try {
+    //     const tasks = await 
+    // } catch (error) {
+        
+    // }
+})
 router.get('/pilots', async (req, res) => {
     try {
         const data = await Pilot.find()
