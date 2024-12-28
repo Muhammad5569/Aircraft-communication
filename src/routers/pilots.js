@@ -1,6 +1,6 @@
 const express = require('express')
 const Pilot = require('../models/pilots')
-
+const Flight = require('../models/flight')
 const router = new express.Router()
 
 
@@ -39,13 +39,7 @@ router.post('/pilots/login', async (req, res) => {
         res.status(400).send()
     }
 })
-router.post('pilots/task', async (req, res) =>{
-    // try {
-    //     const tasks = await 
-    // } catch (error) {
-        
-    // }
-})
+
 router.get('/pilots', async (req, res) => {
     try {
         const data = await Pilot.find()
@@ -62,7 +56,10 @@ router.get('/pilots/:id', async (req, res) => {
         if(!pilot) {
             return res.status(404).send()
         }
-        res.send(pilot)
+        const name = pilot.name
+        const flight = await Flight.find({"cruwSchedule.pilot": name})
+        
+        res.send({name, flight})
     } catch (error) {
         res.status(500).send(error)
     }
